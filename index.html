@@ -6,193 +6,302 @@
 <title>APEX — Vêtements de Sport Premium</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --black:#080808; --white:#f0ede8; --accent:#ff3d00; --gray:#111; --mid:#1e1e1e; --border:#272727; --muted:#666; }
-  *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-  html { scroll-behavior:smooth; }
-  body { background:var(--black); color:var(--white); font-family:'DM Sans',sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
-  #cur { position:fixed; width:10px; height:10px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
-  #cur2 { position:fixed; width:32px; height:32px; border:1px solid rgba(255,61,0,.4); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:left .12s,top .12s; }
-  nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:22px 52px; background:rgba(8,8,8,.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
-  .logo { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:5px; color:var(--white); text-decoration:none; }
-  .nav-links { display:flex; gap:36px; list-style:none; }
-  .nav-links a { color:var(--white); text-decoration:none; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; opacity:.5; transition:opacity .2s; }
-  .nav-links a:hover { opacity:1; }
-  .nav-cart { background:var(--accent); color:var(--white); padding:10px 22px; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; text-decoration:none; transition:background .2s; }
-  .nav-cart:hover { background:#cc3100; }
+  :root {
+    --black: #080808;
+    --white: #f0ede8;
+    --accent: #ff3d00;
+    --gray: #111;
+    --mid: #1e1e1e;
+    --border: #272727;
+    --muted: #666;
+  }
 
-  /* HERO */
-  .hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; overflow:hidden; }
-  .hero-left { display:flex; flex-direction:column; justify-content:flex-end; padding:160px 52px 90px; position:relative; z-index:2; }
-  .eyebrow { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:20px; opacity:0; animation:up .8s .2s forwards; }
-  .hero-h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(72px,9vw,128px); line-height:.88; margin-bottom:28px; opacity:0; animation:up .8s .4s forwards; }
-  .hero-h1 em { font-style:normal; color:var(--accent); }
-  .hero-p { font-size:15px; line-height:1.8; color:var(--muted); max-width:360px; margin-bottom:44px; opacity:0; animation:up .8s .6s forwards; }
-  .hero-cta { display:flex; gap:14px; opacity:0; animation:up .8s .8s forwards; }
-  .btn-r { background:var(--accent); color:var(--white); padding:15px 34px; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; text-decoration:none; transition:background .2s,transform .2s; display:inline-block; }
-  .btn-r:hover { background:#cc3100; transform:translateY(-2px); }
-  .btn-o { background:transparent; color:var(--white); padding:15px 34px; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; text-decoration:none; border:1px solid rgba(255,255,255,.18); transition:border-color .2s,transform .2s; display:inline-block; }
-  .btn-o:hover { border-color:var(--white); transform:translateY(-2px); }
-  .hero-stats { position:absolute; bottom:90px; left:52px; display:flex; gap:44px; opacity:0; animation:up .8s 1s forwards; }
-  .stat-n { font-family:'Bebas Neue',sans-serif; font-size:38px; line-height:1; }
-  .stat-l { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:4px; }
-  .hero-right { position:relative; background:var(--gray); overflow:hidden; }
-  .hero-glow { position:absolute; width:400px; height:400px; background:radial-gradient(circle,rgba(255,61,0,.12) 0%,transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); animation:pulse 4s ease-in-out infinite; }
-  .hero-num { position:absolute; font-family:'Bebas Neue',sans-serif; font-size:380px; color:rgba(255,255,255,.025); top:50%; left:50%; transform:translate(-50%,-50%); user-select:none; }
-  .hero-badge { position:absolute; bottom:80px; right:52px; width:110px; height:110px; border-radius:50%; border:1px solid rgba(255,255,255,.1); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; animation:spin 20s linear infinite; }
-  .hero-badge span { font-family:'DM Mono',monospace; font-size:8px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); line-height:2; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
 
-  /* MARQUEE */
-  .marquee { overflow:hidden; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:18px 0; background:var(--gray); }
-  .mtrack { display:flex; gap:56px; animation:marquee 22s linear infinite; white-space:nowrap; width:max-content; }
-  .mitem { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:4px; color:var(--muted); display:flex; align-items:center; gap:56px; }
-  .mitem::after { content:'✦'; color:var(--accent); font-size:10px; }
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    background: rgba(8,8,8,.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 5px; color: var(--white); text-decoration: none; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-menu-btn { background: none; border: 1px solid var(--border); color: var(--white); padding: 8px 12px; font-size: 16px; cursor: pointer; display: none; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { color: var(--white); text-decoration: none; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; opacity: .5; transition: opacity .2s; }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cart { background: var(--accent); color: var(--white); padding: 9px 18px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
 
-  /* SECTIONS */
-  .sec { padding:96px 52px; }
-  .sec-tag { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
-  .sec-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(44px,5.5vw,72px); line-height:1; letter-spacing:-1px; margin-bottom:56px; }
+  /* Mobile menu */
+  .mobile-menu {
+    display: none; position: fixed; top: 57px; left: 0; right: 0; bottom: 0;
+    background: var(--black); z-index: 199; flex-direction: column;
+    padding: 40px 24px; gap: 32px; border-top: 1px solid var(--border);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: var(--white); text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 2px; opacity: .7; transition: opacity .2s; }
+  .mobile-menu a:hover { opacity: 1; color: var(--accent); }
 
-  /* PRODUCTS */
-  .pgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
-  .pcard { position:relative; background:var(--gray); overflow:hidden; }
-  .pcard:first-child { grid-row:span 2; }
-  .pimg { width:100%; aspect-ratio:3/4; display:flex; align-items:center; justify-content:center; font-size:90px; transition:transform .5s; }
-  .pcard:first-child .pimg { aspect-ratio:unset; min-height:560px; font-size:160px; }
-  .pcard:hover .pimg { transform:scale(1.05); }
-  .pbadge { position:absolute; top:18px; left:18px; background:var(--accent); font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; padding:5px 10px; color:white; }
-  .pinfo { padding:18px 22px; }
-  .pcat { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
-  .pname { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:1px; margin-bottom:10px; }
-  .pfoot { display:flex; align-items:center; justify-content:space-between; margin-top:12px; }
-  .pprice { font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--accent); }
-  .pold { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); text-decoration:line-through; margin-left:8px; }
-  .padd { background:var(--accent); border:none; color:white; width:38px; height:38px; font-size:20px; cursor:none; transition:background .2s; display:flex; align-items:center; justify-content:center; }
-  .padd:hover { background:#cc3100; }
-  .pcolors { display:flex; gap:6px; margin-top:10px; }
-  .pcolor { width:14px; height:14px; border-radius:50%; border:2px solid transparent; cursor:none; transition:border-color .2s; }
-  .pcolor:hover { border-color:var(--white); }
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh; padding-top: 57px;
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+  }
+  .hero-content {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 48px 24px 40px;
+    position: relative; z-index: 2;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 40%, rgba(255,61,0,.08) 0%, transparent 60%);
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+    opacity: 0; animation: up .8s .2s forwards;
+  }
+  .hero-h1 {
+    font-family: 'Bebas Neue', sans-serif; font-size: clamp(64px, 18vw, 120px);
+    line-height: .88; margin-bottom: 20px;
+    opacity: 0; animation: up .8s .4s forwards;
+  }
+  .hero-h1 em { font-style: normal; color: var(--accent); }
+  .hero-p {
+    font-size: 14px; line-height: 1.8; color: var(--muted);
+    max-width: 320px; margin-bottom: 36px;
+    opacity: 0; animation: up .8s .6s forwards;
+  }
+  .hero-cta {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    opacity: 0; animation: up .8s .8s forwards;
+  }
+  .btn-r {
+    background: var(--accent); color: var(--white); padding: 14px 28px;
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; text-decoration: none; transition: background .2s;
+    display: inline-block;
+  }
+  .btn-r:hover { background: #cc3100; }
+  .btn-o {
+    background: transparent; color: var(--white); padding: 14px 28px;
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; text-decoration: none;
+    border: 1px solid rgba(255,255,255,.2); transition: border-color .2s;
+    display: inline-block;
+  }
+  .btn-o:hover { border-color: var(--white); }
 
-  /* FEATURES */
-  .feats { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
-  .feat { padding:44px; border-right:1px solid var(--border); }
-  .feat:last-child { border-right:none; }
-  .feat-icon { font-size:26px; margin-bottom:14px; }
-  .feat-title { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:1px; margin-bottom:8px; }
-  .feat-desc { font-size:13px; color:var(--muted); line-height:1.7; }
+  .hero-stats {
+    display: flex; gap: 0;
+    border-top: 1px solid var(--border); margin-top: 48px;
+    opacity: 0; animation: up .8s 1s forwards;
+  }
+  .stat { flex: 1; padding: 20px 0; border-right: 1px solid var(--border); text-align: center; }
+  .stat:last-child { border-right: none; }
+  .stat-n { font-family: 'Bebas Neue', sans-serif; font-size: 28px; line-height: 1; }
+  .stat-l { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
 
-  /* CATEGORIES */
-  .cats { background:var(--gray); }
-  .catgrid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
-  .catitem { position:relative; height:300px; display:flex; align-items:flex-end; padding:24px; overflow:hidden; }
-  .catbg { position:absolute; inset:0; font-size:110px; display:flex; align-items:center; justify-content:center; transition:transform .4s; }
-  .catitem:hover .catbg { transform:scale(1.08); }
-  .catover { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 60%); }
-  .catname { position:relative; z-index:1; font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:2px; }
-  .catcount { position:relative; z-index:1; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-left:auto; }
+  /* ─── MARQUEE ─── */
+  .marquee { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 14px 0; background: var(--gray); }
+  .mtrack { display: flex; gap: 48px; animation: marquee 20s linear infinite; white-space: nowrap; width: max-content; }
+  .mitem { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 3px; color: var(--muted); display: flex; align-items: center; gap: 48px; }
+  .mitem::after { content: '✦'; color: var(--accent); font-size: 9px; }
 
-  /* REVIEWS */
-  .rgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
-  .rcard { background:var(--gray); padding:36px; border:1px solid var(--border); position:relative; transition:border-color .3s; }
-  .rcard:hover { border-color:var(--accent); }
-  .rstars { display:flex; gap:4px; margin-bottom:20px; }
-  .rstar { color:var(--accent); font-size:16px; }
-  .rtext { font-size:15px; line-height:1.8; color:rgba(240,237,232,.8); margin-bottom:28px; font-style:italic; }
-  .rquote { font-family:'Bebas Neue',sans-serif; font-size:60px; color:rgba(255,61,0,.12); position:absolute; top:16px; right:24px; line-height:1; }
-  .rauthor { display:flex; align-items:center; gap:14px; }
-  .ravatar { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:18px; color:white; flex-shrink:0; }
-  .rname { font-size:14px; font-weight:500; margin-bottom:2px; }
-  .rsport { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
-  .rverif { font-family:'DM Mono',monospace; font-size:9px; color:#00e676; margin-top:4px; }
-  .rsummary { display:flex; align-items:center; gap:48px; margin-bottom:56px; padding-bottom:40px; border-bottom:1px solid var(--border); }
-  .rscore { font-family:'Bebas Neue',sans-serif; font-size:80px; line-height:1; }
-  .rbar-row { display:flex; align-items:center; gap:12px; margin-bottom:7px; }
-  .rbar-label { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); width:28px; }
-  .rbar { height:4px; background:var(--mid); width:140px; }
-  .rbar-fill { height:100%; background:var(--accent); }
-  .rbar-pct { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); }
-  .rcount { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:8px; }
+  /* ─── SECTIONS ─── */
+  .sec { padding: 64px 24px; }
+  .sec-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .sec-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 10vw, 64px); line-height: 1; letter-spacing: -1px; margin-bottom: 40px; }
 
-  /* SIZE GUIDE */
-  .sizes { background:var(--gray); }
-  .stable { width:100%; border-collapse:collapse; }
-  .stable th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); padding:14px 20px; border-bottom:1px solid var(--border); text-align:left; }
-  .stable td { padding:16px 20px; border-bottom:1px solid rgba(39,39,39,.5); font-size:14px; }
-  .stable tr:hover td { background:rgba(255,61,0,.04); }
-  .hl { color:var(--accent); font-weight:500; }
-  .size-note { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); margin-top:20px; }
+  /* ─── PRODUCTS ─── */
+  .pgrid { display: grid; grid-template-columns: 1fr; gap: 2px; }
+  .pcard { position: relative; background: var(--gray); overflow: hidden; }
+  .pimg { width: 100%; height: 240px; display: flex; align-items: center; justify-content: center; font-size: 80px; transition: transform .5s; }
+  .pcard:hover .pimg { transform: scale(1.04); }
+  .pbadge { position: absolute; top: 16px; left: 16px; background: var(--accent); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; color: white; }
+  .pinfo { padding: 16px 20px; }
+  .pcat { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .pname { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px; margin-bottom: 8px; }
+  .pfoot { display: flex; align-items: center; justify-content: space-between; }
+  .pprice { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--accent); }
+  .pold { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); text-decoration: line-through; margin-left: 6px; }
+  .padd { background: var(--accent); border: none; color: white; width: 40px; height: 40px; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s; flex-shrink: 0; }
+  .padd:hover { background: #cc3100; }
+  .pcolors { display: flex; gap: 6px; margin-top: 8px; }
+  .pcolor { width: 14px; height: 14px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
 
-  /* PROMO */
-  .promo { background:var(--accent); padding:96px 52px; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:60px; }
-  .promo-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(56px,8vw,100px); line-height:.88; color:var(--black); }
-  .promo-sub { font-size:15px; color:rgba(8,8,8,.65); line-height:1.7; margin-bottom:28px; max-width:400px; }
-  .promo-code { background:rgba(8,8,8,.12); border:1px dashed rgba(8,8,8,.3); padding:14px 20px; display:inline-flex; align-items:center; gap:14px; margin-bottom:28px; }
-  .promo-code-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:rgba(8,8,8,.5); }
-  .promo-code-val { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:3px; color:var(--black); }
-  .btn-dark { background:var(--black); color:var(--white); padding:15px 34px; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; text-decoration:none; display:inline-block; transition:transform .2s; }
-  .btn-dark:hover { transform:translateY(-2px); }
-  .timer { display:flex; gap:20px; margin-bottom:28px; }
-  .tunit { text-align:center; }
-  .tnum { font-family:'Bebas Neue',sans-serif; font-size:42px; line-height:1; color:var(--black); }
-  .tlabel { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:rgba(8,8,8,.5); }
+  /* ─── FEATURES ─── */
+  .feats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
+  .feat { padding: 28px 20px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .feat:nth-child(2n) { border-right: none; }
+  .feat:nth-child(3), .feat:nth-child(4) { border-bottom: none; }
+  .feat-icon { font-size: 22px; margin-bottom: 10px; }
+  .feat-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; margin-bottom: 6px; }
+  .feat-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
 
-  /* FAQ */
-  .faq-list { max-width:800px; display:flex; flex-direction:column; gap:2px; }
-  .faq-item { background:var(--gray); border:1px solid var(--border); overflow:hidden; }
-  .faq-q { padding:22px 28px; display:flex; justify-content:space-between; align-items:center; cursor:none; font-size:15px; font-weight:500; transition:color .2s; }
-  .faq-q:hover { color:var(--accent); }
-  .faq-icon { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--accent); transition:transform .3s; flex-shrink:0; }
-  .faq-a { max-height:0; overflow:hidden; transition:max-height .35s ease,padding .35s; padding:0 28px; font-size:14px; line-height:1.8; color:var(--muted); }
-  .faq-item.open .faq-a { max-height:200px; padding:0 28px 22px; }
-  .faq-item.open .faq-icon { transform:rotate(45deg); }
+  /* ─── CATEGORIES ─── */
+  .cats { background: var(--gray); padding: 64px 0; }
+  .cats .sec-tag, .cats .sec-title { padding: 0 24px; }
+  .catgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 0 0; }
+  .catitem { position: relative; height: 180px; display: flex; align-items: flex-end; padding: 18px; overflow: hidden; }
+  .catbg { position: absolute; inset: 0; font-size: 80px; display: flex; align-items: center; justify-content: center; transition: transform .4s; }
+  .catitem:hover .catbg { transform: scale(1.08); }
+  .catover { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 60%); }
+  .catname { position: relative; z-index: 1; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; }
+  .catcount { position: relative; z-index: 1; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-left: auto; }
 
-  /* INSTAGRAM */
-  .igrid { display:grid; grid-template-columns:repeat(6,1fr); gap:2px; }
-  .iitem { aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:48px; background:var(--mid); transition:transform .3s; }
-  .iitem:hover { transform:scale(1.04); z-index:1; }
-  .insta-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; }
+  /* ─── REVIEWS ─── */
+  .reviews { background: var(--black); }
+  .rsummary { display: flex; align-items: center; gap: 24px; margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .rscore { font-family: 'Bebas Neue', sans-serif; font-size: 64px; line-height: 1; }
+  .rbar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .rbar-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); width: 24px; }
+  .rbar { height: 3px; background: var(--mid); width: 100px; }
+  .rbar-fill { height: 100%; background: var(--accent); }
+  .rbar-pct { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
+  .rcount { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 6px; }
+  .rgrid { display: grid; grid-template-columns: 1fr; gap: 2px; }
+  .rcard { background: var(--gray); padding: 28px; border: 1px solid var(--border); position: relative; transition: border-color .3s; }
+  .rcard:hover { border-color: var(--accent); }
+  .rstars { display: flex; gap: 3px; margin-bottom: 16px; }
+  .rstar { color: var(--accent); font-size: 14px; }
+  .rtext { font-size: 14px; line-height: 1.8; color: rgba(240,237,232,.8); margin-bottom: 24px; font-style: italic; }
+  .rquote { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: rgba(255,61,0,.1); position: absolute; top: 12px; right: 20px; line-height: 1; }
+  .rauthor { display: flex; align-items: center; gap: 12px; }
+  .ravatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: white; flex-shrink: 0; }
+  .rname { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .rsport { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .rverif { font-family: 'DM Mono', monospace; font-size: 9px; color: #00e676; margin-top: 3px; }
 
-  /* NEWSLETTER */
-  .newsletter { background:var(--black); padding:96px 52px; text-align:center; border-top:1px solid var(--border); }
-  .nl-sub { color:var(--muted); font-size:15px; margin-bottom:44px; }
-  .nl-form { display:flex; max-width:480px; margin:0 auto; }
-  .nl-input { flex:1; background:var(--gray); border:1px solid var(--border); border-right:none; padding:16px 20px; color:var(--white); font-family:'DM Sans',sans-serif; font-size:14px; outline:none; }
-  .nl-input::placeholder { color:var(--muted); }
-  .nl-input:focus { border-color:var(--accent); }
-  .nl-btn { background:var(--accent); border:none; padding:16px 26px; color:white; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; cursor:none; transition:background .2s; }
-  .nl-btn:hover { background:#cc3100; }
-  .nl-trust { display:flex; align-items:center; justify-content:center; gap:28px; margin-top:20px; }
-  .nl-trust span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
+  /* ─── SIZE GUIDE ─── */
+  .sizes { background: var(--gray); }
+  .stable-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .stable { width: 100%; border-collapse: collapse; min-width: 460px; }
+  .stable th { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); padding: 12px 14px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+  .stable td { padding: 14px; border-bottom: 1px solid rgba(39,39,39,.5); font-size: 13px; white-space: nowrap; }
+  .stable tr:hover td { background: rgba(255,61,0,.04); }
+  .hl { color: var(--accent); font-weight: 500; }
+  .size-note { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 16px; line-height: 1.6; }
 
-  /* FOOTER */
-  footer { background:var(--gray); padding:72px 52px 32px; border-top:1px solid var(--border); }
-  .fgrid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:60px; }
-  .fcol h4 { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:2px; margin-bottom:20px; }
-  .fcol ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
-  .fcol ul a { color:var(--muted); text-decoration:none; font-size:13px; transition:color .2s; }
-  .fcol ul a:hover { color:var(--white); }
-  .fbrand-desc { font-size:13px; color:var(--muted); line-height:1.8; max-width:270px; margin-top:16px; }
-  .fsocials { display:flex; gap:10px; margin-top:24px; }
-  .fsoc { width:36px; height:36px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:14px; transition:border-color .2s; text-decoration:none; }
-  .fsoc:hover { border-color:var(--accent); }
-  .fbot { display:flex; justify-content:space-between; align-items:center; padding-top:28px; border-top:1px solid var(--border); }
-  .fbot span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
-  .fpayments { display:flex; gap:8px; }
-  .fpay { background:var(--mid); border:1px solid var(--border); padding:4px 10px; font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); }
+  /* ─── PROMO ─── */
+  .promo { background: var(--accent); padding: 64px 24px; }
+  .promo-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px, 18vw, 100px); line-height: .88; color: var(--black); margin-bottom: 32px; }
+  .promo-sub { font-size: 14px; color: rgba(8,8,8,.65); line-height: 1.7; margin-bottom: 24px; }
+  .promo-code { background: rgba(8,8,8,.12); border: 1px dashed rgba(8,8,8,.3); padding: 14px 18px; display: inline-flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .promo-code-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(8,8,8,.5); }
+  .promo-code-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--black); }
+  .btn-dark { background: var(--black); color: var(--white); padding: 14px 28px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; display: inline-block; }
+  .timer { display: flex; gap: 16px; margin-bottom: 24px; }
+  .tunit { text-align: center; }
+  .tnum { font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1; color: var(--black); }
+  .tlabel { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: rgba(8,8,8,.5); }
 
-  .rev { opacity:0; transform:translateY(36px); transition:opacity .7s ease,transform .7s ease; }
-  .rev.vis { opacity:1; transform:none; }
+  /* ─── FAQ ─── */
+  .faq-list { display: flex; flex-direction: column; gap: 2px; }
+  .faq-item { background: var(--gray); border: 1px solid var(--border); overflow: hidden; }
+  .faq-q { padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 14px; font-weight: 500; transition: color .2s; gap: 12px; }
+  .faq-q:hover { color: var(--accent); }
+  .faq-icon { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); transition: transform .3s; flex-shrink: 0; }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .35s; padding: 0 20px; font-size: 13px; line-height: 1.8; color: var(--muted); }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 20px 18px; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
 
-  @keyframes up { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
-  @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-  @keyframes pulse { 0%,100% { transform:translate(-50%,-50%) scale(1); opacity:.12; } 50% { transform:translate(-50%,-50%) scale(1.2); opacity:.06; } }
-  @keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+  /* ─── INSTAGRAM ─── */
+  .insta { background: var(--gray); padding: 64px 0; }
+  .insta-head { display: flex; align-items: flex-start; justify-content: space-between; padding: 0 24px; margin-bottom: 24px; gap: 12px; }
+  .igrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .iitem { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 36px; background: var(--mid); transition: transform .3s; }
+
+  /* ─── NEWSLETTER ─── */
+  .newsletter { background: var(--black); padding: 64px 24px; text-align: center; border-top: 1px solid var(--border); }
+  .nl-sub { color: var(--muted); font-size: 14px; margin-bottom: 36px; line-height: 1.7; }
+  .nl-form { display: flex; flex-direction: column; gap: 2px; max-width: 400px; margin: 0 auto; }
+  .nl-input { background: var(--gray); border: 1px solid var(--border); padding: 16px 20px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
+  .nl-input::placeholder { color: var(--muted); }
+  .nl-input:focus { border-color: var(--accent); }
+  .nl-btn { background: var(--accent); border: none; padding: 16px; color: white; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: background .2s; }
+  .nl-btn:hover { background: #cc3100; }
+  .nl-trust { display: flex; flex-direction: column; gap: 8px; align-items: center; margin-top: 20px; }
+  .nl-trust span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+  /* ─── FOOTER ─── */
+  footer { background: var(--gray); padding: 48px 24px 24px; border-top: 1px solid var(--border); }
+  .fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-bottom: 48px; }
+  .fcol h4 { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; margin-bottom: 16px; }
+  .fcol ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .fcol ul a { color: var(--muted); text-decoration: none; font-size: 13px; transition: color .2s; }
+  .fcol ul a:hover { color: var(--white); }
+  .fbrand { grid-column: span 2; }
+  .fbrand-desc { font-size: 13px; color: var(--muted); line-height: 1.8; margin-top: 12px; }
+  .fsocials { display: flex; gap: 10px; margin-top: 20px; }
+  .fsoc { width: 34px; height: 34px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; text-decoration: none; transition: border-color .2s; }
+  .fsoc:hover { border-color: var(--accent); }
+  .fbot { padding-top: 24px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
+  .fbot span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .fpayments { display: flex; gap: 6px; flex-wrap: wrap; }
+  .fpay { background: var(--mid); border: 1px solid var(--border); padding: 4px 8px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
+
+  /* ─── REVEAL ─── */
+  .rev { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+  .rev.vis { opacity: 1; transform: none; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ─── DESKTOP ─── */
+  @media (min-width: 768px) {
+    nav { padding: 20px 40px; }
+    .nav-menu-btn { display: none !important; }
+    .nav-links { display: flex !important; }
+    .hero { flex-direction: row; }
+    .hero-content { padding: 140px 52px 80px; max-width: 55%; justify-content: flex-end; }
+    .hero-visual { flex: 1; position: relative; background: var(--gray); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .hero-p { max-width: 380px; }
+    .hero-cta { flex-wrap: nowrap; }
+    .hero-stats { flex-direction: row; border-top: none; margin-top: 56px; gap: 44px; }
+    .stat { padding: 0; border-right: none; text-align: left; }
+    .stat-n { font-size: 38px; }
+    .pgrid { grid-template-columns: repeat(3, 1fr); }
+    .pcard:first-child { grid-row: span 2; }
+    .pcard:first-child .pimg { min-height: 500px; font-size: 140px; height: auto; }
+    .feats { grid-template-columns: repeat(4, 1fr); }
+    .feat { border-bottom: none; }
+    .feat:nth-child(2n) { border-right: 1px solid var(--border); }
+    .feat:last-child { border-right: none; }
+    .catgrid { grid-template-columns: repeat(4, 1fr); }
+    .catitem { height: 280px; }
+    .rgrid { grid-template-columns: repeat(3, 1fr); }
+    .nl-form { flex-direction: row; }
+    .nl-trust { flex-direction: row; gap: 24px; }
+    .fgrid { grid-template-columns: 2fr 1fr 1fr; }
+    .fbrand { grid-column: span 1; }
+    .fbot { flex-direction: row; justify-content: space-between; align-items: center; }
+    .sec { padding: 96px 52px; }
+    .cats { padding: 96px 0; }
+    .cats .sec-tag, .cats .sec-title { padding: 0 52px; }
+    .insta { padding: 96px 0; }
+    .insta-head { padding: 0 52px; }
+    .igrid { grid-template-columns: repeat(6, 1fr); }
+    .newsletter { padding: 96px 52px; }
+    footer { padding: 72px 52px 32px; }
+  }
+
+  @media (max-width: 767px) {
+    .nav-links { display: none; }
+    .nav-menu-btn { display: block; }
+    .hero-visual { display: none; }
+  }
 </style>
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="cur2"></div>
-
+<!-- NAV -->
 <nav>
   <a href="#" class="logo">APEX</a>
   <ul class="nav-links">
@@ -202,30 +311,39 @@
     <li><a href="#sizes">Tailles</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
-  <a href="#" class="nav-cart" id="cartBtn">Panier (0)</a>
+  <div class="nav-right">
+    <button class="nav-menu-btn" onclick="toggleMenu()">☰</button>
+    <a href="#" class="nav-cart" id="cartBtn">Panier (0)</a>
+  </div>
 </nav>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#products" onclick="closeMenu()">Collection</a>
+  <a href="#categories" onclick="closeMenu()">Sports</a>
+  <a href="#reviews" onclick="closeMenu()">Avis</a>
+  <a href="#sizes" onclick="closeMenu()">Tailles</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+</div>
+
 <!-- HERO -->
-<section class="hero" style="padding:0">
-  <div class="hero-left">
-    <div class="eyebrow">Nouvelle Collection — Printemps 2026</div>
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Nouvelle Collection — Printemps 2026</div>
     <h1 class="hero-h1">DÉPASSE<br>TES<br><em>LIMITES</em></h1>
-    <p class="hero-p">Équipements de sport haute performance pour les athlètes qui ne font aucun compromis. Conçu en Suisse, porté dans le monde entier.</p>
+    <p class="hero-p">Équipements de sport haute performance pour les athlètes qui ne font aucun compromis. Conçu en Suisse 🇨🇭</p>
     <div class="hero-cta">
-      <a href="#products" class="btn-r">Explorer la collection</a>
+      <a href="#products" class="btn-r">Explorer</a>
       <a href="#promo" class="btn-o">-30% ce weekend</a>
     </div>
     <div class="hero-stats">
       <div class="stat"><div class="stat-n">48K</div><div class="stat-l">Clients</div></div>
-      <div class="stat"><div class="stat-n">4.9★</div><div class="stat-l">Note moyenne</div></div>
-      <div class="stat"><div class="stat-n">12</div><div class="stat-l">Pays livrés</div></div>
+      <div class="stat"><div class="stat-n">4.9★</div><div class="stat-l">Note</div></div>
+      <div class="stat"><div class="stat-n">12</div><div class="stat-l">Pays</div></div>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-glow"></div>
-    <div class="hero-num">A</div>
-    <div class="hero-badge"><span>SS<br>2026<br>✦<br>DROP</span></div>
-  </div>
+  <div class="hero-visual"></div>
 </section>
 
 <!-- MARQUEE -->
@@ -309,68 +427,58 @@
 
 <!-- FEATURES -->
 <div class="feats">
-  <div class="feat rev"><div class="feat-icon">⚡</div><div class="feat-title">Livraison Express</div><div class="feat-desc">Suisse sous 24h. Europe sous 48h. Gratuit dès CHF 100.</div></div>
-  <div class="feat rev"><div class="feat-icon">🔁</div><div class="feat-title">Retours 30 jours</div><div class="feat-desc">Retours gratuits, sans conditions ni questions.</div></div>
-  <div class="feat rev"><div class="feat-icon">🛡️</div><div class="feat-title">Garantie 2 ans</div><div class="feat-desc">Contre tous défauts de fabrication.</div></div>
-  <div class="feat rev"><div class="feat-icon">🌿</div><div class="feat-title">Éco-Responsable</div><div class="feat-desc">Matières recyclées, certifié OEKO-TEX.</div></div>
+  <div class="feat rev"><div class="feat-icon">⚡</div><div class="feat-title">Livraison Express</div><div class="feat-desc">Suisse 24h. Europe 48h. Gratuit dès CHF 100.</div></div>
+  <div class="feat rev"><div class="feat-icon">🔁</div><div class="feat-title">Retours 30j</div><div class="feat-desc">Gratuits, sans conditions.</div></div>
+  <div class="feat rev"><div class="feat-icon">🛡️</div><div class="feat-title">Garantie 2 ans</div><div class="feat-desc">Contre tout défaut.</div></div>
+  <div class="feat rev"><div class="feat-icon">🌿</div><div class="feat-title">Éco-Responsable</div><div class="feat-desc">Certifié OEKO-TEX.</div></div>
 </div>
 
 <!-- CATEGORIES -->
-<section class="sec cats" id="categories">
+<section class="cats" id="categories">
   <div class="sec-tag">Explorer</div>
   <h2 class="sec-title rev">Par Sport</h2>
   <div class="catgrid rev">
-    <div class="catitem" style="background:#0d0d0d"><div class="catbg">🏃</div><div class="catover"></div><div class="catname">Running</div><div class="catcount">24 articles</div></div>
-    <div class="catitem" style="background:#111"><div class="catbg">💪</div><div class="catover"></div><div class="catname">Musculation</div><div class="catcount">18 articles</div></div>
-    <div class="catitem" style="background:#0d0d0d"><div class="catbg">🧘</div><div class="catover"></div><div class="catname">Yoga</div><div class="catcount">15 articles</div></div>
-    <div class="catitem" style="background:#111"><div class="catbg">🚴</div><div class="catover"></div><div class="catname">Cycling</div><div class="catcount">12 articles</div></div>
+    <div class="catitem" style="background:#0d0d0d"><div class="catbg">🏃</div><div class="catover"></div><div class="catname">Running</div><div class="catcount">24</div></div>
+    <div class="catitem" style="background:#111"><div class="catbg">💪</div><div class="catover"></div><div class="catname">Muscu</div><div class="catcount">18</div></div>
+    <div class="catitem" style="background:#0d0d0d"><div class="catbg">🧘</div><div class="catover"></div><div class="catname">Yoga</div><div class="catcount">15</div></div>
+    <div class="catitem" style="background:#111"><div class="catbg">🚴</div><div class="catover"></div><div class="catname">Cycling</div><div class="catcount">12</div></div>
   </div>
 </section>
 
 <!-- REVIEWS -->
-<section class="sec" id="reviews" style="background:var(--black)">
+<section class="sec reviews" id="reviews">
   <div class="sec-tag">Témoignages</div>
-  <h2 class="sec-title rev">Ce que disent nos clients</h2>
+  <h2 class="sec-title rev">Nos clients parlent</h2>
   <div class="rsummary rev">
     <div class="rscore">4.9</div>
     <div>
-      <div style="display:flex;gap:4px;margin-bottom:8px"><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span></div>
-      <div class="rcount">Basé sur 2 847 avis vérifiés</div>
-    </div>
-    <div>
-      <div class="rbar-row"><span class="rbar-label">5★</span><div class="rbar"><div class="rbar-fill" style="width:88%"></div></div><span class="rbar-pct">88%</span></div>
-      <div class="rbar-row"><span class="rbar-label">4★</span><div class="rbar"><div class="rbar-fill" style="width:9%"></div></div><span class="rbar-pct">9%</span></div>
-      <div class="rbar-row"><span class="rbar-label">3★</span><div class="rbar"><div class="rbar-fill" style="width:2%"></div></div><span class="rbar-pct">2%</span></div>
-      <div class="rbar-row"><span class="rbar-label">2★</span><div class="rbar"><div class="rbar-fill" style="width:1%"></div></div><span class="rbar-pct">1%</span></div>
+      <div style="display:flex;gap:3px;margin-bottom:6px"><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span></div>
+      <div class="rcount">2 847 avis vérifiés</div>
+      <div style="margin-top:12px">
+        <div class="rbar-row"><span class="rbar-label">5★</span><div class="rbar"><div class="rbar-fill" style="width:88%"></div></div><span class="rbar-pct">88%</span></div>
+        <div class="rbar-row"><span class="rbar-label">4★</span><div class="rbar"><div class="rbar-fill" style="width:9%"></div></div><span class="rbar-pct">9%</span></div>
+        <div class="rbar-row"><span class="rbar-label">3★</span><div class="rbar"><div class="rbar-fill" style="width:2%"></div></div><span class="rbar-pct">2%</span></div>
+      </div>
     </div>
   </div>
   <div class="rgrid rev">
     <div class="rcard">
       <div class="rquote">"</div>
       <div class="rstars"><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span></div>
-      <p class="rtext">Le APEX RUN PRO a complètement changé ma façon de courir. Le tissu respire parfaitement même sur les longues sorties, et le maintien est incroyable. Je ne courrai plus jamais sans.</p>
-      <div class="rauthor">
-        <div class="ravatar" style="background:linear-gradient(135deg,#ff3d00,#ff8c00)">T</div>
-        <div><div class="rname">Thomas M.</div><div class="rsport">Trailrunner — Lausanne</div><div class="rverif">✓ Achat vérifié</div></div>
-      </div>
+      <p class="rtext">Le APEX RUN PRO a changé ma façon de courir. Tissu qui respire parfaitement, maintien incroyable. Je ne courrai plus jamais sans.</p>
+      <div class="rauthor"><div class="ravatar" style="background:linear-gradient(135deg,#ff3d00,#ff8c00)">T</div><div><div class="rname">Thomas M.</div><div class="rsport">Trailrunner — Lausanne</div><div class="rverif">✓ Achat vérifié</div></div></div>
     </div>
     <div class="rcard">
       <div class="rquote">"</div>
       <div class="rstars"><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span></div>
-      <p class="rtext">J'ai commandé le FLEX SEAMLESS pour le yoga et j'ai été bluffée par la qualité. Aucune couture inconfortable, le tissu suit chaque mouvement. Livraison en 24h, parfait.</p>
-      <div class="rauthor">
-        <div class="ravatar" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">S</div>
-        <div><div class="rname">Sofia B.</div><div class="rsport">Professeure de Yoga — Genève</div><div class="rverif">✓ Achat vérifié</div></div>
-      </div>
+      <p class="rtext">FLEX SEAMLESS pour le yoga — bluffée par la qualité. Aucune couture inconfortable, tissu parfait. Livraison en 24h top.</p>
+      <div class="rauthor"><div class="ravatar" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">S</div><div><div class="rname">Sofia B.</div><div class="rsport">Prof. de Yoga — Genève</div><div class="rverif">✓ Achat vérifié</div></div></div>
     </div>
     <div class="rcard">
       <div class="rquote">"</div>
       <div class="rstars"><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span><span class="rstar">★</span></div>
-      <p class="rtext">Franchement impressionné. Le POWER SHORTS tient ses promesses — compression parfaite, matière éco et look ultra propre. J'en ai commandé 3 autres immédiatement.</p>
-      <div class="rauthor">
-        <div class="ravatar" style="background:linear-gradient(135deg,#059669,#10b981)">K</div>
-        <div><div class="rname">Kevin D.</div><div class="rsport">Athlète CrossFit — Zurich</div><div class="rverif">✓ Achat vérifié</div></div>
-      </div>
+      <p class="rtext">POWER SHORTS — compression parfaite, matière éco, look ultra clean. J'en ai commandé 3 autres immédiatement.</p>
+      <div class="rauthor"><div class="ravatar" style="background:linear-gradient(135deg,#059669,#10b981)">K</div><div><div class="rname">Kevin D.</div><div class="rsport">CrossFit — Zurich</div><div class="rverif">✓ Achat vérifié</div></div></div>
     </div>
   </div>
 </section>
@@ -379,87 +487,81 @@
 <section class="sec sizes" id="sizes">
   <div class="sec-tag">Conseils</div>
   <h2 class="sec-title rev">Guide des Tailles</h2>
-  <div class="rev">
+  <div class="stable-wrap rev">
     <table class="stable">
       <thead><tr><th>Taille</th><th>Poitrine</th><th>Taille</th><th>Hanches</th><th>Hauteur</th></tr></thead>
       <tbody>
-        <tr><td>XS</td><td>80–84 cm</td><td>62–66 cm</td><td>86–90 cm</td><td>155–165 cm</td></tr>
-        <tr><td>S</td><td>85–90 cm</td><td>67–72 cm</td><td>91–96 cm</td><td>163–170 cm</td></tr>
-        <tr><td class="hl">M</td><td class="hl">91–97 cm</td><td class="hl">73–79 cm</td><td class="hl">97–103 cm</td><td class="hl">168–178 cm</td></tr>
-        <tr><td>L</td><td>98–104 cm</td><td>80–86 cm</td><td>104–110 cm</td><td>175–183 cm</td></tr>
-        <tr><td>XL</td><td>105–112 cm</td><td>87–94 cm</td><td>111–118 cm</td><td>180–188 cm</td></tr>
-        <tr><td>2XL</td><td>113–121 cm</td><td>95–103 cm</td><td>119–127 cm</td><td>185–195 cm</td></tr>
+        <tr><td>XS</td><td>80–84</td><td>62–66</td><td>86–90</td><td>155–165 cm</td></tr>
+        <tr><td>S</td><td>85–90</td><td>67–72</td><td>91–96</td><td>163–170 cm</td></tr>
+        <tr><td class="hl">M ★</td><td class="hl">91–97</td><td class="hl">73–79</td><td class="hl">97–103</td><td class="hl">168–178 cm</td></tr>
+        <tr><td>L</td><td>98–104</td><td>80–86</td><td>104–110</td><td>175–183 cm</td></tr>
+        <tr><td>XL</td><td>105–112</td><td>87–94</td><td>111–118</td><td>180–188 cm</td></tr>
+        <tr><td>2XL</td><td>113–121</td><td>95–103</td><td>119–127</td><td>185–195 cm</td></tr>
       </tbody>
     </table>
-    <p class="size-note">★ En cas de doute entre deux tailles, prenez la taille supérieure.</p>
   </div>
+  <p class="size-note rev">★ Taille M — la plus commandée. En cas de doute, prenez la taille supérieure.</p>
 </section>
 
 <!-- PROMO -->
 <div class="promo rev" id="promo">
-  <div><div class="promo-title">-30%<br>SUR TOUT<br>CE WEEKEND</div></div>
-  <div>
-    <p style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(8,8,8,.5);margin-bottom:16px">Offre expire dans</p>
-    <div class="timer">
-      <div class="tunit"><div class="tnum" id="th">08</div><div class="tlabel">Heures</div></div>
-      <div class="tunit"><div class="tnum" id="tm">45</div><div class="tlabel">Minutes</div></div>
-      <div class="tunit"><div class="tnum" id="ts">30</div><div class="tlabel">Secondes</div></div>
-    </div>
-    <div class="promo-code"><div class="promo-code-label">Code promo</div><div class="promo-code-val">APEX30</div></div>
-    <p class="promo-sub">Valable sur toute la collection SS 2026. Livraison express offerte dès CHF 80.</p>
-    <a href="#products" class="btn-dark">Profiter maintenant</a>
+  <div class="promo-title">-30%<br>SUR TOUT</div>
+  <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(8,8,8,.5);margin-bottom:14px">Expire dans</p>
+  <div class="timer">
+    <div class="tunit"><div class="tnum" id="th">08</div><div class="tlabel">H</div></div>
+    <div class="tunit"><div class="tnum" id="tm">45</div><div class="tlabel">MIN</div></div>
+    <div class="tunit"><div class="tnum" id="ts">30</div><div class="tlabel">SEC</div></div>
   </div>
+  <div class="promo-code"><div class="promo-code-label">Code</div><div class="promo-code-val">APEX30</div></div>
+  <p class="promo-sub">Collection SS 2026 complète. Livraison express offerte dès CHF 80.</p>
+  <a href="#products" class="btn-dark">Profiter maintenant</a>
 </div>
 
 <!-- FAQ -->
-<section class="sec faq" id="faq" style="background:var(--black)">
+<section class="sec" id="faq">
   <div class="sec-tag">Questions fréquentes</div>
   <h2 class="sec-title rev">FAQ</h2>
   <div class="faq-list rev">
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)"><span>Quels sont les délais et frais de livraison ?</span><span class="faq-icon">+</span></div>
-      <div class="faq-a">Livraison express en Suisse sous 24h (gratuite dès CHF 100, sinon CHF 5.90). Europe sous 48h (gratuite dès CHF 150). International sous 5–7 jours. Vous recevez un email de suivi dès l'expédition.</div>
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Délais et frais de livraison ?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">Suisse sous 24h (gratuit dès CHF 100, sinon CHF 5.90). Europe sous 48h (gratuit dès CHF 150). International 5–7 jours.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)"><span>Comment fonctionne la politique de retour ?</span><span class="faq-icon">+</span></div>
-      <div class="faq-a">Vous avez 30 jours pour retourner tout article non porté dans son emballage d'origine. Les retours sont entièrement gratuits depuis la Suisse. Le remboursement est effectué sous 3–5 jours ouvrés.</div>
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Comment fonctionne le retour ?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">30 jours pour retourner tout article non porté. Retours gratuits depuis la Suisse. Remboursement sous 3–5 jours.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)"><span>Quelle taille choisir si je suis entre deux ?</span><span class="faq-icon">+</span></div>
-      <div class="faq-a">Nos vêtements ont une coupe ajustée. En cas de doute entre deux tailles, nous recommandons de prendre la taille supérieure. Consultez notre guide des tailles pour les mesures précises.</div>
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Quelle taille choisir ?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">Coupe ajustée. En cas de doute, prenez la taille supérieure. Consultez notre guide des tailles pour les mesures exactes.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)"><span>Les matières sont-elles éco-responsables ?</span><span class="faq-icon">+</span></div>
-      <div class="faq-a">Oui. Tous nos tissus sont certifiés OEKO-TEX Standard 100 et fabriqués à partir de matières recyclées. Notre usine partenaire est certifiée Fair Trade.</div>
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Matières éco-responsables ?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">Oui. Tous nos tissus sont certifiés OEKO-TEX et fabriqués à partir de matières recyclées. Production Fair Trade certifiée.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)"><span>Comment entretenir mes vêtements APEX ?</span><span class="faq-icon">+</span></div>
-      <div class="faq-a">Lavage en machine à 30°C, cycle délicat. Ne pas utiliser d'adoucissant. Séchage à l'air libre recommandé. Ne pas repasser directement sur les impressions.</div>
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Entretien des vêtements ?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">Lavage 30°C, cycle délicat. Pas d'adoucissant. Séchage à l'air libre. Ne pas repasser sur les impressions.</div>
     </div>
   </div>
 </section>
 
 <!-- INSTAGRAM -->
-<section class="sec" style="background:var(--gray)" id="insta">
+<section class="insta">
   <div class="insta-head">
     <div><div class="sec-tag">Communauté</div><h2 class="sec-title rev" style="margin-bottom:0">@apex_sport</h2></div>
-    <a href="#" class="btn-r">Nous suivre</a>
+    <a href="#" class="btn-r" style="align-self:center">Suivre</a>
   </div>
   <div class="igrid rev">
-    <div class="iitem">🏃</div>
-    <div class="iitem">💪</div>
-    <div class="iitem">🧘</div>
-    <div class="iitem">🚴</div>
-    <div class="iitem">🏋️</div>
-    <div class="iitem">⛰️</div>
+    <div class="iitem">🏃</div><div class="iitem">💪</div><div class="iitem">🧘</div>
+    <div class="iitem">🚴</div><div class="iitem">🏋️</div><div class="iitem">⛰️</div>
   </div>
 </section>
 
 <!-- NEWSLETTER -->
 <section class="newsletter" id="newsletter">
-  <div class="sec-tag" style="display:flex;justify-content:center">Rester connecté</div>
-  <h2 class="sec-title rev" style="text-align:center">Rejoins la Team APEX</h2>
-  <p class="nl-sub rev">Drops exclusifs · Accès anticipé · -10% sur ta première commande</p>
+  <div class="sec-tag" style="display:flex;justify-content:center">Newsletter</div>
+  <h2 class="sec-title rev" style="text-align:center">Rejoins la Team</h2>
+  <p class="nl-sub rev">Drops exclusifs · Accès anticipé · -10% première commande</p>
   <div class="nl-form rev">
     <input type="email" class="nl-input" placeholder="ton@email.com">
     <button class="nl-btn">S'inscrire</button>
@@ -467,21 +569,19 @@
   <div class="nl-trust rev">
     <span>🔒 Données protégées</span>
     <span>📭 Pas de spam</span>
-    <span>✉️ 1 email / semaine max</span>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="fgrid">
-    <div class="fcol">
-      <a href="#" style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:5px;color:var(--white);text-decoration:none">APEX</a>
-      <p class="fbrand-desc">Vêtements de sport haut de gamme pour les athlètes qui ne font aucun compromis. Conçu en Suisse 🇨🇭</p>
+    <div class="fcol fbrand">
+      <a href="#" style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:5px;color:var(--white);text-decoration:none">APEX</a>
+      <p class="fbrand-desc">Vêtements de sport premium. Conçu en Suisse 🇨🇭</p>
       <div class="fsocials">
         <a href="#" class="fsoc">📸</a>
         <a href="#" class="fsoc">🎵</a>
         <a href="#" class="fsoc">▶️</a>
-        <a href="#" class="fsoc">in</a>
       </div>
     </div>
     <div class="fcol">
@@ -495,47 +595,38 @@
       </ul>
     </div>
     <div class="fcol">
-      <h4>Service client</h4>
+      <h4>Aide</h4>
       <ul>
         <li><a href="#">Mon compte</a></li>
-        <li><a href="#">Suivi commande</a></li>
         <li><a href="#">Livraison</a></li>
         <li><a href="#">Retours</a></li>
         <li><a href="#">FAQ</a></li>
-      </ul>
-    </div>
-    <div class="fcol">
-      <h4>APEX</h4>
-      <ul>
-        <li><a href="#">Notre histoire</a></li>
-        <li><a href="#">Engagements</a></li>
         <li><a href="#">Contact</a></li>
-        <li><a href="#">Affiliés</a></li>
       </ul>
     </div>
   </div>
   <div class="fbot">
-    <span>© 2026 APEX Sportswear · Lausanne, Suisse</span>
+    <span>© 2026 APEX · Lausanne 🇨🇭</span>
     <div class="fpayments">
-      <span class="fpay">VISA</span>
-      <span class="fpay">MC</span>
-      <span class="fpay">TWINT</span>
-      <span class="fpay">PAYPAL</span>
+      <span class="fpay">VISA</span><span class="fpay">MC</span><span class="fpay">TWINT</span><span class="fpay">PAYPAL</span>
     </div>
-    <span>Mentions légales · Confidentialité</span>
   </div>
 </footer>
 
 <script>
-  const cur = document.getElementById('cur'), cur2 = document.getElementById('cur2');
-  document.addEventListener('mousemove', e => {
-    cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px';
-    setTimeout(() => { cur2.style.left = e.clientX + 'px'; cur2.style.top = e.clientY + 'px'; }, 80);
-  });
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
 
+  // Scroll reveal
   const obs = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('vis')), { threshold: 0.08 });
   document.querySelectorAll('.rev').forEach(r => obs.observe(r));
 
+  // Cart
   let count = 0;
   function addCart(btn) {
     btn.textContent = '✓'; btn.style.background = '#00aa55';
@@ -543,20 +634,22 @@
     setTimeout(() => { btn.textContent = '+'; btn.style.background = 'var(--accent)'; }, 1500);
   }
 
+  // FAQ
   function toggleFaq(el) {
     const item = el.parentElement;
     document.querySelectorAll('.faq-item.open').forEach(i => { if(i !== item) i.classList.remove('open'); });
     item.classList.toggle('open');
   }
 
+  // Countdown
   let secs = 8 * 3600 + 45 * 60 + 30;
   setInterval(() => {
     secs = Math.max(0, secs - 1);
-    const h = Math.floor(secs / 3600), m = Math.floor((secs % 3600) / 60), s = secs % 60;
-    document.getElementById('th').textContent = String(h).padStart(2,'0');
-    document.getElementById('tm').textContent = String(m).padStart(2,'0');
-    document.getElementById('ts').textContent = String(s).padStart(2,'0');
+    document.getElementById('th').textContent = String(Math.floor(secs/3600)).padStart(2,'0');
+    document.getElementById('tm').textContent = String(Math.floor((secs%3600)/60)).padStart(2,'0');
+    document.getElementById('ts').textContent = String(secs%60).padStart(2,'0');
   }, 1000);
 </script>
 </body>
 </html>
+
